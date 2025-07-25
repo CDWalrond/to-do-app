@@ -6,16 +6,18 @@
 }
 
 .logo {
-  height: 6em;
+  height: 4em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
+  color: blue;
+  font-size: x-large;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #0611e8aa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #06baecaa);
 }
 
 @keyframes logo-spin {
@@ -38,5 +40,13 @@
 }
 
 .read-the-docs {
-  color: #888;
+  color: #141313;
+}
+.button-style {
+  border-style: solid;
+  border-width: 4px;
+  border-color: black;
+  background-color: blue;
+  font-style: bold;
+  color: white;
 }

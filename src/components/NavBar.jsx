@@ -1,7 +1,7 @@
 function NavBar() {
   return (
     <>
-      <nav>Nav Placeholder</nav>
+      <nav className="logo">Cyril's To Do App</nav>
     </>
   );
 }

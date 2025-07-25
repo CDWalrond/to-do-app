@@ -1,7 +1,9 @@
 function Footer() {
   return (
     <>
-      <footer>Footer Placeholder</footer>
+      <footer className="logo">
+        To Do or Not To Do?...That is the question!
+      </footer>
     </>
   );
 }
