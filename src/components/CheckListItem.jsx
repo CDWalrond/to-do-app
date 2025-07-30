@@ -1,26 +1,27 @@
 function CheckListItem({
-  item,
-  handleCheckboxClick,
+  todo,
+  handleToggleComplete,
   handleUpdateClick,
-  handleDeleteClick,
-  handleIsUpdatingValue,
+  handleDelete,
+  handleSaveEdit,
   isUpdatingValue,
   setUpdateValue,
   updateValue,
 }) {
+  console.log("CheckListItem rendered with item:", todo);
   return (
     <>
       <li>
         {!isUpdatingValue ? (
           <>
-            {item.text}{" "}
+            {todo.text}
             <input
               type="checkbox"
-              onChange={handleCheckboxClick(item.id)}
-              checked={item.completed}
+              onChange={handleToggleComplete(todo._id)}
+              checked={todo.completed}
             />
-            <button onClick={handleIsUpdatingValue(item.text)}>Update</button>
-            <button onClick={handleDeleteClick(item.id)}>Delete</button>
+            <button onClick={handleSaveEdit(todo.text)}>Update</button>
+            <button onClick={handleDelete(todo._id)}>Delete</button>
           </>
         ) : (
           <>
@@ -29,7 +30,7 @@ function CheckListItem({
               value={updateValue}
               onChange={(e) => setUpdateValue(e.target.value)}
             />
-            <button onClick={handleUpdateClick(item.id)}>Update</button>
+            <button onClick={handleUpdateClick(todo._id)}>Update</button>
           </>
         )}
       </li>

@@ -8,7 +8,9 @@ const fetchTodos = async (setTodos) => {
   try {
     const response = await fetch("https://to-do-back-end.onrender.com/todos");
     const data = await response.json();
+    console.log("Fetched todos:", data);
     setTodos(data.todos);
+    console.log(data.todos);
   } catch (error) {
     console.error("Error fetching todos:", error);
   }
@@ -28,6 +30,8 @@ const MainContent = () => {
 
   // Add a new todo to the state
   const handleAddTodo = async () => {
+    console.log("Adding new todo:", newTodo);
+    if (!newTodo.trim()) return; // Prevent adding empty todos
     try {
       const response = await fetch(
         "https://to-do-back-end.onrender.com/add-item",
@@ -39,10 +43,12 @@ const MainContent = () => {
           body: JSON.stringify({ text: newTodo }), // Only send text, no _id or completed
         }
       );
-      const data = await response.json();
-      console.log("New todo added:", data);
-      setTodos([...todos, data]); // Update state with new todo from the backend
-      setNewTodo(""); // Reset input
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log("New todo added:", data);
+        setTodos([...todos, newTodo]); // Update state with new todo from the backend
+        setNewTodo("");
+      } // Reset input
     } catch (error) {
       console.error("Error adding todo:", error);
     }
@@ -104,20 +110,23 @@ const MainContent = () => {
   };
 
   // Map todos to ChecklistItem components
-  const mappedTodos = todos.map((todo) => (
-    <ChecklistItem
-      key={todo._id}
-      todo={todo}
-      editingTodoId={editingTodoId}
-      editingTask={editingTask}
-      handleEditTodo={handleEditTodo}
-      handleSaveEdit={handleSaveEdit}
-      handleCancelEdit={handleCancelEdit}
-      handleToggleComplete={handleToggleComplete}
-      handleDelete={handleDelete}
-      setEditingTask={setEditingTask}
-    />
-  ));
+  const mappedTodos = todos.map((todo) => {
+    console.log("Mapping todo:", todo);
+    return (
+      <ChecklistItem
+        key={todo._id}
+        todo={todo}
+        editingTodoId={editingTodoId}
+        editingTask={editingTask}
+        handleEditTodo={handleEditTodo}
+        handleSaveEdit={handleSaveEdit}
+        handleCancelEdit={handleCancelEdit}
+        handleToggleComplete={handleToggleComplete}
+        handleDelete={handleDelete}
+        setEditingTask={setEditingTask}
+      />
+    );
+  });
 
   return (
     <div>
