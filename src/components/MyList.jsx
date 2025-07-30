@@ -43,12 +43,11 @@ const MainContent = () => {
           body: JSON.stringify({ text: newTodo }), // Only send text, no _id or completed
         }
       );
-      if (response.status === 200) {
-        const data = await response.json();
-        console.log("New todo added:", data);
-        setTodos([...todos, newTodo]); // Update state with new todo from the backend
-        setNewTodo("");
-      } // Reset input
+
+      const data = await response.json();
+      console.log("New todo added:", data);
+      setTodos([...todos, data]); // Update state with new todo from the backend
+      setNewTodo("");
     } catch (error) {
       console.error("Error adding todo:", error);
     }
@@ -111,7 +110,6 @@ const MainContent = () => {
 
   // Map todos to ChecklistItem components
   const mappedTodos = todos.map((todo) => {
-    console.log("Mapping todo:", todo);
     return (
       <ChecklistItem
         key={todo._id}
@@ -138,11 +136,7 @@ const MainContent = () => {
         variant="outlined"
         fullWidth
       />
-      <Button
-        onClick={() => handleAddTodo()}
-        variant="contained"
-        sx={{ mt: 2 }}
-      >
+      <Button onClick={handleAddTodo} variant="contained" sx={{ mt: 2 }}>
         Add Task
       </Button>
       <List>{mappedTodos}</List>
