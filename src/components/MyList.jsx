@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 
 const fetchTodos = async (setTodos) => {
   try {
-    const response = await fetch("http://localhost:5001/todos");
+    const response = await fetch("https://to-do-back-end.onrender.com/todos");
     const data = await response.json();
     console.log("Fetched todos:", data);
     setTodos(data.todos);
@@ -37,13 +37,16 @@ const MainContent = () => {
     console.log("Adding new todo:", newTodo);
     if (!newTodo.trim()) return; // Prevent adding empty todos
     try {
-      const response = await fetch("http://localhost:5001/add-item", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text: newTodo }),
-      });
+      const response = await fetch(
+        "https://to-do-back-end.onrender.com/add-item",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text: newTodo }),
+        }
+      );
 
       const data = await response.json();
       console.log("New todo added:", data);
@@ -67,13 +70,16 @@ const MainContent = () => {
   // Save the edited todo
   const handleSaveEdit = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5001/edit-item/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text: updateValue }), // Use updateValue instead of editingTask
-      });
+      const response = await fetch(
+        `https://to-do-back-end.onrender.com/edit-item/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text: updateValue }), // Use updateValue instead of editingTask
+        }
+      );
       const updatedTodo = await response.json();
       setTodos(todos.map((todo) => (todo._id === id ? updatedTodo : todo)));
       setEditingTodoId(null); // Exit edit mode
@@ -101,7 +107,7 @@ const MainContent = () => {
   // Delete a todo
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5001/delete-item/${id}`, {
+      await fetch(`https://to-do-back-end.onrender.com/delete-item/${id}`, {
         method: "DELETE",
       });
       setTodos(todos.filter((todo) => todo._id !== id));
